@@ -22,7 +22,7 @@ exactly(X, [Y|L], N) :-
 	exactly(X, L, M).
 	 
 	 
-%passa por todas as séries
+%passa por todas as séries ve se leas estao no horario suposto (noturno, matinal ou normal)
 horarioSuposto(Series) :-
     horarioSuposto([], Series).
 
@@ -32,12 +32,21 @@ horarioSuposto(Acc, [task(Inicio, _, Fim,  _, IdDia)| Series]) :-
     horarioSuposto([Id|Acc], Series),
 	exactly(Inicio, ListaHorario, B), % o fim e o inicio tem de aparecer uma vez na lista de de Horarios obrigatorios
 	exactly(Fim, ListaHorario, C),
-	mudaMaquina(B, IdDia),
-	mudaMaquina(C, IdDia).
+	(B #= 0 #/\ IdDia #= 3) #\/ B #\= 0,
+	(C #= 0 #/\ IdDia #= 3) #\/ C #\= 0.
 
 horarioSuposto(_,_).
 
 
-mudaMaquina(0, IdDia):- IdDia #= 3.
-mudaMaquina(1, _).
+%trata dos casos de contratos em que duas series nao podem ser transmitidas no mesmo dia
+restricaoContratual(Series) :-
+	restricaoContratual([], Series).
 	
+restricaoContratual(Acc,  Series) :-
+    contrato(Id1, Id2),
+    \+ member([Id1, Id2], Acc), !,
+    restricaoContratual([[Id1, Id2]|Acc], Series),
+	nth1(Id1, Series, task(_, _, _,  _, IdDia1)),
+	nth1(Id2, Series, task(_, _, _,  _, IdDia2)),
+	IdDia1 #\= IdDia2 #\/ (IdDia1 #= 3 #/\ IdDia2 #= 3).
+restricaoContratual(_,  _).
