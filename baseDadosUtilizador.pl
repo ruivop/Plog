@@ -1,25 +1,27 @@
 /*BASE DE DADOS A FAZER PELO UTILIZADOR*/
 
 %dia para fazer a programacao 
+dia(1).
 dia(2).
-dia(3).
-dia(6).
+
+inicio(16).
+fim(23).
 
 %series disponiveis
 %indice, nome, custo, duração, horario obrigatório
-serie(1, 'batman1', 40000, 2, X):- horarioMatinal(X).
-serie(2, 'batman2', 40000, 3, X):- horarioMatinal(X).
-serie(3, 'batman3', 50000, 2, X):- horarioNormal(X).
-serie(4, 'batman4', 20000, 1, X):- horarioNormal(X).
-serie(5, 'batman5', 50000, 1, X):- horarioNoturno(X).
-serie(6, 'batman6', 20000, 2, X):- horarioNormal(X).
-serie(7, 'batman7', 50000, 5, X):- horarioNormal(X).
-serie(8, 'batman8', 50000, 6, X):- horarioNoturno(X).
-serie(9, 'batman9', 50000, 3, X):- horarioNormal(X).
-serie(10, 'batman10', 50000, 1, X):- horarioNormal(X).
-serie(11, 'batman11', 50000, 1, X):- horarioNormal(X).
-serie(12, 'batman12', 50000, 1, X):- horarioNormal(X).
-serie(13, 'batman13', 50000, 2, X):- horarioNormal(X).
+serie(1, 'ER', 40000, 2, X):- horarioMatinal(X).
+serie(2, 'Friends', 40000, 3, X):- horarioMatinal(X).
+serie(3, 'Marco Polo', 50000, 4, X):- horarioNormal(X).
+serie(4, 'Camelot', 20000, 1, X):- horarioNormal(X).
+serie(5, 'Rome', 50000, 6, X):- horarioNoturno(X).
+serie(6, 'Game of Thrones', 20000, 2, X):- horarioNormal(X).
+serie(7, 'Frasier', 50000, 5, X):- horarioNormal(X).
+serie(8, 'Deadwood', 50000, 6, X):- horarioNoturno(X).
+serie(9, 'Lost', 50000, 3, X):- horarioNormal(X).
+serie(10, 'Fringe', 50000, 1, X):- horarioNormal(X).
+serie(11, 'House of Cards', 50000, 4, X):- horarioNormal(X).
+serie(12, 'Breaking Bad', 50000, 6, X):- horarioNormal(X).
+serie(13, 'Doctor Who', 50000, 2, X):- horarioNormal(X).
 
 %contrato(A, B), A nao pode ser exibido no mesmo dia que B
 contrato(10,11).

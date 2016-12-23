@@ -7,11 +7,16 @@
 				  
 
 projeto:-
+	statistics(walltime, [Start,_]),
 	createSeries(Series, SriesCusto, Ss, Es, Ms),
 	createDias(Dias), %cada dia é uma maquina á exeção da ultima maquina que nao tem dia
 	
-	domain(Ss, 16, 22), %tempos iniciais
-    domain(Es, 17, 23), %tempos finais
+	inicio(TempoInicio),
+	fim(TempoFim),
+	 TempoFimTotal is  TempoFim - 1,
+	 TempoInicioTotal is TempoInicio + 1,
+	domain(Ss, TempoInicio, TempoFimTotal), %tempos iniciais
+    domain(Es, TempoInicioTotal, TempoFim), %tempos finais
 	diaFinal(X),
     domain(Ms, 1, X), %id dos dias
 	CustoTotal in 0 .. 9999999,
@@ -25,7 +30,10 @@ projeto:-
     cumulatives(Series, Dias, [bound(upper)]),
     append([Ms, Ss, [CustoTotal] ], Vars),
 
-    labeling([minimize(CustoTotal)], Vars),
+    labeling([min, minimize(CustoTotal)], Vars),
+	statistics(walltime, [End,_]),
+	Time is End - Start,
+	format('Demorou ~3d segundos.~n', [Time]),
 	printSeriesDias(Series, Dias).
 	
 	

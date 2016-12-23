@@ -51,4 +51,4 @@ restricaoContratual(Acc,  Series) :-
 	nth1(Id2, Series, task(_, _, _,  _, IdDia2)),
 	diaFinal(X),
 	IdDia1 #\= IdDia2 #\/ (IdDia1 #= X #/\ IdDia2 #= X).
-restricaoContratual(_,  _).
+restricaoContratual(_, _).
