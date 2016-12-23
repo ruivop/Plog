@@ -13,8 +13,9 @@ projeto:-
 	
 	inicio(TempoInicio),
 	fim(TempoFim),
-	 TempoFimTotal is  TempoFim - 1,
-	 TempoInicioTotal is TempoInicio + 1,
+	TempoFimTotal is  TempoFim - 1,
+	TempoInicioTotal is TempoInicio + 1,
+	Diff is TempoFim - TempoInicio,
 	domain(Ss, TempoInicio, TempoFimTotal), %tempos iniciais
     domain(Es, TempoInicioTotal, TempoFim), %tempos finais
 	diaFinal(X),
@@ -22,7 +23,7 @@ projeto:-
 	CustoTotal in 0 .. 9999999,
 	
 	%restricoes
-	diasSemVazios(Dias, Series, 6),
+	diasSemVazios(Dias, Series, Diff),
 	horarioSuposto(Series),
 	restricaoContratual(Series),
 	
