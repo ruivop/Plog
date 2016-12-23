@@ -32,8 +32,9 @@ horarioSuposto(Acc, [task(Inicio, _, Fim,  _, IdDia)| Series]) :-
     horarioSuposto([Id|Acc], Series),
 	exactly(Inicio, ListaHorario, B), % o fim e o inicio tem de aparecer uma vez na lista de de Horarios obrigatorios
 	exactly(Fim, ListaHorario, C),
-	(B #= 0 #/\ IdDia #= 3) #\/ B #\= 0,
-	(C #= 0 #/\ IdDia #= 3) #\/ C #\= 0.
+	diaFinal(X),
+	(B #= 0 #/\ IdDia #= X) #\/ B #\= 0,
+	(C #= 0 #/\ IdDia #= X) #\/ C #\= 0.
 
 horarioSuposto(_,_).
 
@@ -48,5 +49,6 @@ restricaoContratual(Acc,  Series) :-
     restricaoContratual([[Id1, Id2]|Acc], Series),
 	nth1(Id1, Series, task(_, _, _,  _, IdDia1)),
 	nth1(Id2, Series, task(_, _, _,  _, IdDia2)),
-	IdDia1 #\= IdDia2 #\/ (IdDia1 #= 3 #/\ IdDia2 #= 3).
+	diaFinal(X),
+	IdDia1 #\= IdDia2 #\/ (IdDia1 #= X #/\ IdDia2 #= X).
 restricaoContratual(_,  _).
