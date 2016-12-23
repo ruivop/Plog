@@ -50,7 +50,7 @@ slot(46, 22).
 slot(47, 22.5).
 slot(48, 23).
 slot(49, 23.5).
-
+slot(50, 24).
 
 diaSemana(1, 'Segunda Feira').
 diaSemana(2, 'Terca Feira').
@@ -61,15 +61,15 @@ diaSemana(6, 'Sabado').
 diaSemana(7, 'Domingo').
 
 %indice, nome, custo, duração, horario obrigatório
-serie(1, 'batman1', 50000, 2, X):- horarioNoturno(X).
-serie(2, 'batman2', 50000, 3, X):- horarioNoturno(X).
-serie(3, 'batman3', 50000, 2, X):- horarioNoturno(X).
-serie(4, 'batman4', 50000, 1, X):- horarioNoturno(X).
+serie(1, 'batman1', 50000, 2, X):- horarioMatinal(X).
+serie(2, 'batman2', 50000, 3, X):- horarioMatinal(X).
+serie(3, 'batman3', 50000, 2, X):- horarioNormal(X).
+serie(4, 'batman4', 50000, 1, X):- horarioNormal(X).
 serie(5, 'batman5', 50000, 1, X):- horarioNoturno(X).
-serie(6, 'batman6', 50000, 2, X):- horarioNoturno(X).
-serie(7, 'batman7', 50000, 5, X):- horarioNoturno(X).
+serie(6, 'batman6', 50000, 2, X):- horarioNormal(X).
+serie(7, 'batman7', 50000, 5, X):- horarioNormal(X).
 serie(8, 'batman8', 50000, 2, X):- horarioNoturno(X).
-serie(9, 'batman9', 50000, 3, X):- horarioNoturno(X).
+serie(9, 'batman9', 50000, 3, X):- horarioNormal(X).
 serie(10, 'batman10', 50000, 1, X):- horarioNoturno(X).
 /*serie(11, 'batman11', 50000, 1, X):- horarioNoturno(X).
 serie(12, 'batman12', 50000, 1, X):- horarioNoturno(X).
@@ -83,8 +83,13 @@ serie(19, 'batman19', 50000, 3, X):- horarioNoturno(X).
 */
 
 % -X: lista dos horarios da noite
-horarioNoturno([1, 2, 3, 4, 5, 6, 7, 8, 9, 48, 49]).
-
+horarioMatinal([16, 17, 18, 19, 20, 21, 22, 23, 24]).
+horarioNoturno([1, 2, 3, 4, 5, 6, 7, 8, 9, 48, 49, 50]).
+horarioNormal([1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+				  11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+				  21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+				  31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+				  41, 42, 43, 44, 45, 46, 47, 48, 49, 50]).
 /*
 fazerHorario:-
 	declararHorario(L, 1, 10),
@@ -108,8 +113,8 @@ domainHorario([[H,S]|Rest]):-
 projeto(Ss, Es, Ms) :-
 	createSeries(Series, Ss, Es, Ms),
 	
-	domain(Ss, 44, 48), %tempos iniciais
-    domain(Es, 45, 49), %tempos finais
+	domain(Ss, 40, 49), %tempos iniciais
+    domain(Es, 41, 50), %tempos finais
     domain(Ms, 1, 3), %id das maquinas
 	
     %All machines has resource capacity = 1
@@ -119,13 +124,15 @@ projeto(Ss, Es, Ms) :-
         machine(3, 100) %só para caberem todos os outros que não foram para o ar
     ],
 	
-	diasSemVazios(Dias, Series, 5),
+	%restricoes
+	diasSemVazios(Dias, Series, 7),
+	horarioSuposto(Series),
+	
 	
     cumulatives(Series, Dias, [bound(upper)]),
-    maximum( MaxEndTime, Es ),
     append([Ms, Ss ], Vars),
 
-    labeling( [minimize(MaxEndTime)], Vars),
+    labeling( [], Vars),
 	printSeriesDias(Series, Dias).
 	
 %faz o print de séries nos dias
